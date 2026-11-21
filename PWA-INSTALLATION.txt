@@ -1,0 +1,25 @@
+NOËL EN FAMILLE * LYONS-LA-FORÊT — VERSION PWA
+================================================
+
+Le projet contient maintenant les éléments d'une Progressive Web App :
+- manifest.webmanifest : nom, icône et mode d'affichage autonome
+- sw.js : cache du site pour permettre de rouvrir l'interface hors connexion
+- icons/ : icônes Android et iOS
+- index.html : liens PWA, enregistrement du service worker et bouton d'installation
+
+INSTALLATION SUR LES TÉLÉPHONES
+1. Publier le dossier sur un hébergement HTTPS (par exemple GitHub Pages).
+2. Ouvrir l'adresse du site sur Android avec Chrome, puis menu ⋮ > Installer l'application
+   ou Ajouter à l'écran d'accueil.
+3. Sur iPhone : ouvrir dans Safari > bouton Partager > Sur l'écran d'accueil.
+
+IMPORTANT
+- Le site doit être servi en HTTPS pour l'installation PWA (localhost est accepté
+  uniquement pour les essais sur l'ordinateur).
+- Le cache permet de rouvrir l'interface et ses ressources déjà téléchargées.
+  Les inscriptions, propositions et votes partagés nécessitent toujours Internet
+  pour communiquer avec Supabase.
+- Le mode PWA n'héberge pas le site : il faut toujours une adresse HTTPS publique
+  si les membres de la famille doivent s'y connecter depuis chez eux.
+- La configuration Supabase décrite dans INSTALLATION.txt reste nécessaire pour
+  synchroniser les données entre les téléphones.

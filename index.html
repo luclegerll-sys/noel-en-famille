@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#234333">
+<title>Noël en famille * Lyons-la-Forêt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--green:#244735;--green2:#355c46;--gold:#b79558;--ink:#26352c;--muted:#788078;--paper:#fffdf8;--line:#e8e5dc;--bg:#f6f4ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}
+.wrap{width:min(1080px,calc(100% - 32px));margin:auto}
+header{padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{font-family:"Playfair Display",serif;font-size:19px;color:var(--green);font-weight:600}.brand small{display:block;font:10px "DM Sans";letter-spacing:.19em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.status{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:7px}.dot{width:8px;height:8px;border-radius:50%;background:#b9a36e}.dot.ok{background:#4c9b68}
+.hero{min-height:340px;border-radius:22px;overflow:hidden;position:relative;display:grid;place-items:center;text-align:center;padding:38px 20px;background:linear-gradient(180deg,rgba(255,253,248,.96) 0%,rgba(255,253,248,.79) 36%,rgba(255,253,248,.16) 100%),url("https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=1800&q=85") center 52%/cover}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(28,53,38,.10),transparent 55%);pointer-events:none}
+.hero-inner{position:relative;z-index:1}.eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--green2)}h1{font:clamp(36px,6vw,62px) "Playfair Display",serif;line-height:1.08;margin:14px 0;color:#263b2d}.hero p{font-size:14px;color:#48584d;margin:12px 0 0}
+nav{display:flex;justify-content:center;gap:12px;margin:26px auto 24px;flex-wrap:wrap}
+nav button{border:1px solid var(--line);background:var(--paper);color:var(--green);padding:12px 24px;border-radius:999px;font-weight:600;font-size:13px;transition:.2s}
+nav button.active,nav button:hover{background:var(--green);color:white;border-color:var(--green)}
+main{padding-bottom:50px}.section{display:none}.section.active{display:block}
+.intro{text-align:center;margin:0 auto 20px}.intro h2{font:28px "Playfair Display",serif;color:var(--green);margin:0 0 7px}.intro p{font-size:13px;color:var(--muted);margin:0}
+.columns{display:grid;grid-template-columns: minmax(250px,.8fr) minmax(0,1.2fr);gap:18px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:17px;padding:21px;box-shadow:0 5px 20px #26352c08}
+.card h3{font:20px "Playfair Display",serif;margin:0 0 7px;color:var(--green)}.sub{font-size:12px;color:var(--muted);margin:0 0 17px;line-height:1.55}
+label{display:block;font-size:12px;font-weight:600;margin:13px 0 5px}
+input,textarea{width:100%;border:1px solid #deded5;background:white;border-radius:9px;padding:11px 12px;color:var(--ink);outline:none}
+input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px #b795581c}
+.primary{background:var(--green);border:0;border-radius:9px;color:white;padding:12px 16px;font-size:13px;font-weight:600;width:100%;margin-top:15px}.primary:hover{background:var(--green2)}
+.list-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.count{font-size:11px;color:var(--muted)}
+.person{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#e9eee8;color:var(--green);font-weight:700}.person strong{font-size:13px;display:block}.person small{font-size:11px;color:var(--muted)}
+.dish{display:flex;gap:13px;padding:13px 0;border-top:1px solid var(--line)}.dish img{width:92px;height:92px;object-fit:cover;border-radius:11px;background:#eee;flex-shrink:0}.dish strong{font-size:14px}.dish p{font-size:12px;color:var(--muted);line-height:1.5;margin:5px 0}.dish a{font-size:12px;color:var(--green);font-weight:600}
+.empty{font-size:12px;color:var(--muted);padding:14px 0}
+.kif-select{max-width:360px;margin:0 auto 18px}.kif-select label{margin-top:0}select{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--ink)}
+.task{padding:15px 0;border-top:1px solid var(--line)}.task-title{font-weight:600;font-size:14px;margin-bottom:10px}.vote-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:7px 0}.vote-row span{font-size:12px;color:var(--muted)}.votes{display:flex;gap:6px}.vote{font-size:19px;border:1px solid var(--line);background:white;border-radius:8px;padding:5px 9px}.vote.selected{border:2px solid var(--gold);background:#f8f1e3}
+.legend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:13px 0 20px;font-size:11px;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:11px;padding:0 0 30px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#203e2e;color:white;padding:12px 18px;border-radius:10px;font-size:12px;box-shadow:0 8px 30px #0002;z-index:10;display:none;max-width:90vw}
+.setup{background:#fff5df;border:1px solid #ead6a8;border-radius:12px;padding:13px 15px;font-size:12px;line-height:1.55;margin:15px 0;color:#594b2e}
+@media(max-width:700px){.columns{grid-template-columns:1fr}.hero{min-height:285px}nav{gap:7px}nav button{padding:11px 13px;font-size:12px}.card{padding:17px}.brand{font-size:17px}}
+</style>
+
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#244735">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Noël en famille">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">Noël en famille <small>Lyons-la-Forêt · Édition 2026</small></div><div class="status"><span class="dot" id="status-dot"></span><span id="status-text">Connexion en attente</span></div></header>
+<section class="hero"><div class="hero-inner"><div class="eyebrow">Partage · Gourmandise · Convivialité</div><h1>Noël en famille</h1><p>Le plus beau des cadeaux, c'est d'être réunis.</p></div></section>
+<nav aria-label="Navigation principale"><button class="active" data-tab="participants">Participants</button><button data-tab="plats">Idées de plats</button><button data-tab="kif">Kifékoi</button></nav>
+<div id="setup-notice" class="setup"><strong>Dernière étape avant le partage :</strong> connecte la base de données Supabase en suivant le fichier <em>INSTALLATION.txt</em>. Le site est prêt, mais les inscriptions et votes partagés ne seront actifs qu'après cette configuration.</div>
+<main>
+<section id="participants" class="section active">
+<div class="intro"><h2>La famille au complet</h2><p>Inscris-toi pour rejoindre les festivités.</p></div>
+<div class="columns">
+<div class="card"><h3>Je m'inscris</h3><p class="sub">Pas de compte ni de confirmation par e-mail : juste trois petites informations.</p>
+<form id="register"><label for="last">Nom</label><input id="last" maxlength="80" required placeholder="Nom de famille"><label for="first">Prénom</label><input id="first" maxlength="80" required placeholder="Prénom"><label for="nickname">Pseudo</label><input id="nickname" maxlength="40" required placeholder="Ton pseudo"><button class="primary">Rejoindre la famille ✦</button></form></div>
+<div class="card"><div class="list-head"><h3>Les participants</h3><span class="count" id="people-count">0 inscrit</span></div><div id="people-list" class="empty">Les premiers inscrits apparaîtront ici.</div></div>
+</div></section>
+<section id="plats" class="section"><div class="intro"><h2>À table !</h2><p>Les bonnes idées sont faites pour être partagées.</p></div>
+<div class="columns"><div class="card"><h3>Proposer un plat</h3><p class="sub">Ajoute une idée, une photo et un lien vers sa recette.</p>
+<form id="dish-form"><label for="dish-name">Nom du plat</label><input id="dish-name" required maxlength="100" placeholder="Ex. : gratin dauphinois"><label for="dish-image">Lien de la photo</label><input id="dish-image" type="url" placeholder="https://..."><label for="dish-url">Lien de la recette</label><input id="dish-url" type="url" placeholder="https://..."><label for="dish-note">Un petit commentaire (facultatif)</label><textarea id="dish-note" rows="3" maxlength="400" placeholder="Pourquoi cette recette ?"></textarea><button class="primary">Ajouter au carnet ✦</button></form></div>
+<div class="card"><div class="list-head"><h3>Le carnet gourmand</h3><span class="count" id="dish-count">0 idée</span></div><div id="dish-list" class="empty">Aucune proposition pour le moment.</div></div></div></section>
+<section id="kif" class="section"><div class="intro"><h2>Alors, kifékoi ?</h2><p>À chacun son rôle pour un réveillon réussi.</p></div>
+<div class="card"><div class="kif-select"><label for="voter">Je suis :</label><select id="voter"><option value="">Choisir mon pseudo</option></select></div><div class="legend"><span>✌️ Je m'en occupe !</span><span>👍 Je réfléchis</span><span>👎 Pas pour moi</span></div><div id="task-list" class="empty">Les plats proposés apparaîtront ici.</div></div>
+</section>
+</main>
+<footer>✦ Noël en famille · Lyons-la-Forêt · 2026 ✦</footer>
+</div><div class="toast" id="toast" role="status"></div>
+<script>
+/* CONFIGURATION : renseigner les deux valeurs fournies par Supabase dans INSTALLATION.txt */
+const SUPABASE_URL = "COLLER_ICI_L_URL_SUPABASE";
+const SUPABASE_ANON_KEY = "COLLER_ICI_LA_CLE_PUBLIQUE_ANON";
+const configured = SUPABASE_URL.startsWith("https://") && SUPABASE_ANON_KEY.length > 30 && !SUPABASE_ANON_KEY.includes("COLLER_ICI");
+const db = configured ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
+let participants=[], dishes=[], votes=[], activePseudo="";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function toast(msg){$("toast").textContent=msg;$("toast").style.display="block";clearTimeout(toast.timer);toast.timer=setTimeout(()=>$("toast").style.display="none",3200)}
+function setStatus(ok,msg){$("status-dot").classList.toggle("ok",ok);$("status-text").textContent=msg}
+document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".section").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab))}));
+function renderPeople(){
+ $("people-count").textContent=participants.length+" inscrit"+(participants.length>1?"s":"");
+ $("people-list").innerHTML=participants.length?participants.map(p=>`<div class="person"><div class="avatar">${esc(p.pseudo.slice(0,1).toUpperCase())}</div><div><strong>${esc(p.pseudo)}</strong><small>${esc(p.prenom)} ${esc(p.nom)}</small></div></div>`).join(""):'<div class="empty">Les premiers inscrits apparaîtront ici.</div>';
+ $("voter").innerHTML='<option value="">Choisir mon pseudo</option>'+participants.map(p=>`<option value="${esc(p.pseudo)}">${esc(p.pseudo)}</option>`).join("");
+}
+function renderDishes(){
+ $("dish-count").textContent=dishes.length+" idée"+(dishes.length>1?"s":"");
+ $("dish-list").innerHTML=dishes.length?dishes.map(d=>`<article class="dish">${d.image_url?`<img src="${esc(d.image_url)}" alt="Photo de ${esc(d.name)}" loading="lazy" onerror="this.style.display='none'">`:""}<div><strong>${esc(d.name)}</strong>${d.note?`<p>${esc(d.note)}</p>`:""}${d.recipe_url?`<a href="${esc(d.recipe_url)}" target="_blank" rel="noopener noreferrer">Voir la recette ↗</a>`:'<p>Pas de lien recette renseigné.</p>'}</div></article>`).join(""):'<div class="empty">Aucune proposition pour le moment.</div>';
+ renderTasks();
+}
+function renderTasks(){
+ $("task-list").innerHTML=dishes.length?dishes.map(d=>`<div class="task"><div class="task-title">${esc(d.name)}</div>${participants.map(p=>{const v=votes.find(x=>x.dish_id===d.id&&x.pseudo===p.pseudo)?.choice||"";return `<div class="vote-row"><span>${esc(p.pseudo)}</span><div class="votes">${["✌️","👍","👎"].map(e=>`<button class="vote ${v===e?"selected":""}" data-dish="${d.id}" data-pseudo="${esc(p.pseudo)}" data-choice="${e}" aria-label="${e} pour ${esc(p.pseudo)}">${e}</button>`).join("")}</div></div>`}).join("")||'<p class="sub">Inscris-toi pour participer.</p>'}</div>`).join(""):'<div class="empty">Les plats proposés apparaîtront ici.</div>';
+}
+async function refresh(){
+ if(!db){setStatus(false,"Configuration nécessaire");return}
+ try{
+ const [p,d,v]=await Promise.all([db.from("participants").select("*").order("created_at"),db.from("dishes").select("*").order("created_at",{ascending:false}),db.from("votes").select("*")]);
+ if(p.error||d.error||v.error)throw p.error||d.error||v.error;
+ participants=p.data;dishes=d.data;votes=v.data;renderPeople();renderDishes();setStatus(true,"En ligne · données partagées");$("setup-notice").style.display="none";
+ }catch(e){setStatus(false,"Erreur de connexion");toast("Connexion impossible : vérifie la configuration Supabase.");console.error(e)}
+}
+$("register").addEventListener("submit",async e=>{e.preventDefault();if(!db)return toast("La base de données doit d'abord être configurée.");const row={nom:$("last").value.trim(),prenom:$("first").value.trim(),pseudo:$("nickname").value.trim()};if(!row.nom||!row.prenom||!row.pseudo)return;if(participants.some(p=>p.pseudo.toLowerCase()===row.pseudo.toLowerCase()))return toast("Ce pseudo est déjà utilisé.");const {error}=await db.from("participants").insert(row);if(error)return toast(error.code==="23505"?"Ce pseudo est déjà utilisé.":"Inscription impossible : "+error.message);e.target.reset();await refresh();toast("Bienvenue dans la famille !");
+});
+$("dish-form").addEventListener("submit",async e=>{e.preventDefault();if(!db)return toast("La base de données doit d'abord être configurée.");const row={name:$("dish-name").value.trim(),image_url:$("dish-image").value.trim()||null,recipe_url:$("dish-url").value.trim()||null,note:$("dish-note").value.trim()||null};if(!row.name)return;const {error}=await db.from("dishes").insert(row);if(error)return toast("Ajout impossible : "+error.message);e.target.reset();await refresh();toast("Plat ajouté au carnet !");
+});
+$("voter").addEventListener("change",e=>{activePseudo=e.target.value});
+$("task-list").addEventListener("click",async e=>{const b=e.target.closest("[data-dish]");if(!b)return;if(!db)return toast("La base de données doit d'abord être configurée.");const pseudo=$("voter").value;if(!pseudo)return toast("Choisis ton pseudo avant de voter.");const dish_id=Number(b.dataset.dish),choice=b.dataset.choice;const existing=votes.find(v=>v.dish_id===dish_id&&v.pseudo===pseudo);let result;if(existing)result=await db.from("votes").update({choice}).eq("id",existing.id);else result=await db.from("votes").insert({dish_id,pseudo,choice});if(result.error)return toast("Vote non enregistré : "+result.error.message);await refresh();$("voter").value=pseudo;toast("Ton choix a été enregistré !");
+});
+if(db){
+ refresh();
+ db.channel("noel-live").on("postgres_changes",{event:"*",schema:"public",table:"participants"},refresh).on("postgres_changes",{event:"*",schema:"public",table:"dishes"},refresh).on("postgres_changes",{event:"*",schema:"public",table:"votes"},refresh).subscribe();
+}else setStatus(false,"Configuration nécessaire");
+</script>
+
+<div id="pwa-install-wrap" style="display:none;position:sticky;bottom:12px;z-index:20;text-align:center;padding:0 12px">
+ <button id="pwa-install" style="background:#244735;color:white;border:0;border-radius:999px;padding:12px 20px;font:600 13px 'DM Sans',sans-serif;box-shadow:0 5px 18px #0002">＋ Installer l’application Noël</button>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(err => console.warn('Service worker:', err)));
+}
+let deferredInstallPrompt;
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  const wrap = document.getElementById('pwa-install-wrap');
+  if (wrap) wrap.style.display = 'block';
+});
+document.addEventListener('click', async (event) => {
+  if (event.target && event.target.id === 'pwa-install' && deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    document.getElementById('pwa-install-wrap').style.display = 'none';
+  }
+});
+</script>
+
+</body></html>
